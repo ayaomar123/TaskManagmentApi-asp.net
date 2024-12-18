@@ -32,6 +32,85 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "TaskManagmentApi.Controllers.CategoriesController",
+    "Method": "GetCategoriesWithTasks",
+    "RelativePath": "api/categories",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "TaskManagmentApi.Controllers.CategoriesController",
+    "Method": "Store",
+    "RelativePath": "api/categories",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "categoryDto",
+        "Type": "TaskManagmentApi.Models.Dto.CategoryDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "TaskManagmentApi.Controllers.CategoriesController",
+    "Method": "Show",
+    "RelativePath": "api/categories/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "TaskManagmentApi.Controllers.CategoriesController",
+    "Method": "Update",
+    "RelativePath": "api/categories/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "category",
+        "Type": "TaskManagmentApi.Models.Dto.CategoryDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "TaskManagmentApi.Controllers.CategoriesController",
+    "Method": "DeleteCategory",
+    "RelativePath": "api/categories/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "TaskManagmentApi.Controllers.TasksController",
     "Method": "GetTasks",
     "RelativePath": "api/Tasks",
@@ -50,8 +129,61 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "task",
-        "Type": "TaskManagmentApi.Models.TaskItem",
+        "Name": "taskDto",
+        "Type": "TaskManagmentApi.Models.Dto.TaskDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "TaskManagmentApi.Controllers.TasksController",
+    "Method": "Show",
+    "RelativePath": "api/Tasks/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "TaskManagmentApi.Controllers.TasksController",
+    "Method": "Update",
+    "RelativePath": "api/Tasks/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "taskDto",
+        "Type": "TaskManagmentApi.Models.Dto.TaskDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "TaskManagmentApi.Controllers.TasksController",
+    "Method": "Delete",
+    "RelativePath": "api/Tasks/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
         "IsRequired": true
       }
     ],
