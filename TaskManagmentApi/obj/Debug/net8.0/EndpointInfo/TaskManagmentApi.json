@@ -197,6 +197,31 @@
         "tags": [
           "Tasks"
         ],
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "categoryId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "dueDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -413,12 +438,10 @@
             "nullable": true
           },
           "status": {
-            "type": "string",
-            "nullable": true
+            "type": "boolean"
           },
           "priority": {
-            "type": "integer",
-            "format": "int32"
+            "$ref": "#/components/schemas/TaskPriority"
           },
           "dueDate": {
             "type": "string",
@@ -430,6 +453,15 @@
           }
         },
         "additionalProperties": false
+      },
+      "TaskPriority": {
+        "enum": [
+          1,
+          2,
+          3
+        ],
+        "type": "integer",
+        "format": "int32"
       },
       "WeatherForecast": {
         "type": "object",

@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,7 @@ namespace TaskManagmentApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class TasksController : ControllerBase
     {
         private readonly ApplicationDbContext _db;
@@ -22,24 +24,47 @@ namespace TaskManagmentApi.Controllers
         }
 
         [HttpGet]
-        public  IActionResult GetTasks()
+        public ActionResult GetTasks([FromQuery] bool? status, [FromQuery] int? categoryId, [FromQuery] DateTime? dueDate )
         {
-            var tasks = _db.Tasks
-                .Include(t => t.Category)
+            // Start with the base query
+            var query = _db.Tasks.AsQueryable();
+
+            if (status.HasValue)
+            {
+                query = query.Where(t => t.Status == status);
+            }
+
+            if (categoryId.HasValue)
+            {
+                query = query.Where(t => t.CategoryId == categoryId);
+            }
+
+            if (dueDate.HasValue)
+            {
+                query = query.Where(t => t.DueDate.Date == dueDate.Value.Date);
+            }
+
+            var tasks = query
                 .Select(t => new
                 {
-                    Id = t.Id,
-                    Title = t.Title,
-                    Description = t.Description,
-                    Status = t.Status,
-                    Priority = t.Priority,
-                    DueDate = t.DueDate,
-                    CategoryId = t.Category.Id,
-                    CategoryName = t.Category.Name
-                }).
-                ToList();
+                    t.Id,
+                    t.Title,
+                    t.Description,
+                    Status = t.Status ? "Complete" :"Incomplete" ,
+                    Priority = (TaskPriority)t.Priority, 
+                    //Priority = t.Priority, 
+                    t.DueDate,
+                    Category = new
+                    {
+                        t.Category.Id,
+                        t.Category.Name
+                    }
+                })
+                .ToList();
+
             return Ok(tasks);
         }
+
 
         [HttpGet("{id}")]
         public IActionResult Show(int id)
@@ -50,12 +75,15 @@ namespace TaskManagmentApi.Controllers
                     Id = t.Id,
                     Title = t.Title,
                     Description = t.Description,
-                    Status = t.Status,
-                    Priority = t.Priority,
+                    Status = t.Status ? "Complete" : "Incomplete",
+                    Priority = (TaskPriority)t.Priority,
                     DueDate = t.DueDate,
-                    CategoryId = t.Category.Id,
-                    CategoryName = t.Category.Name
-                }).FirstOrDefault();
+                    Category = new
+                    {
+                        Id = t.Category.Id,
+                        Name = t.Category.Name
+                    }
+                }).FirstOrDefault(c => c.Id == id);
             if (task == null) return NotFound();
             return Ok(task);
         }
@@ -90,6 +118,8 @@ namespace TaskManagmentApi.Controllers
         public IActionResult Update(int id, TaskDto taskDto)
         {
             var task = _db.Tasks.Find(id);
+            //return Ok(id);
+
             if (task == null) return NotFound("task not found.");
             
             var categoryExists = _db.Categories.Any(c => c.Id == taskDto.CategoryId);

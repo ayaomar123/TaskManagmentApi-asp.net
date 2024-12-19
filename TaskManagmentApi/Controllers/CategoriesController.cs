@@ -43,7 +43,8 @@ namespace TaskManagmentApi.Controllers
                     Tasks = t.Tasks.Select(t => new
                     {
                         Id = t.Id,
-                        Title = t.Title
+                        Title = t.Title,
+                        Description = t.Description
                     })
                 })
                 .ToList();
@@ -64,9 +65,10 @@ namespace TaskManagmentApi.Controllers
                 Tasks = t.Tasks.Select(t => new
                 {
                     Id = t.Id,
-                    Title = t.Title
+                    Title = t.Title,
+                    Description = t.Description
                 })
-            }).FirstOrDefault(c => c.Id == id); ;
+            }).FirstOrDefault(c => c.Id == id);
             if (category == null) return NotFound();
             return Ok(category);
         }
